@@ -1,7 +1,7 @@
 // js/views/calculatorView.js
 
 // Calculator view rendering function
-function renderCalculatorView(targetElement) {
+window.renderCalculatorView = function(targetElement) { // <<< ADDED window.
     const calculatorHtml = `
         <h1>Bill Calculator</h1>
 
@@ -106,10 +106,8 @@ function renderCalculatorView(targetElement) {
         handleSharedMotorBill,
         calculateAll
     };
-    document.addEventListener('DOMContentLoaded', calculatorFunctions.calculateAll);
-    // Re-run calculateAll if content is added dynamically via router
-    // This handles initial load after router has replaced content
-    setTimeout(calculatorFunctions.calculateAll, 0); // Small delay to ensure DOM is ready
+    // Initial calculation call when the view is loaded by the router
+    calculatorFunctions.calculateAll();
 }
 
 // --- JavaScript functions for Calculator Logic (moved from Flask template script) ---
