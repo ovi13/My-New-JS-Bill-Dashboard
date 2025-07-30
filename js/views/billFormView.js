@@ -4,17 +4,17 @@
 window.currentInvoiceData = null;
 
 // Function to render the bill form page content
-window.renderBillFormView = function(targetElement) { // <<< ADDED window.
+window.renderBillFormView = function(targetElement) {
     const billFormHtml = `
         <h1>Utility Bill Generator</h1>
         <form id="invoiceForm">
             <label for="user">Select Bill Type or User:</label>
-            <select id="user" name="user" required>
+            <select id="user" name="user" onchange="billFormFunctions.showBillFields()" required>
                 <option value="">--Select Bill Type or User--</option>
                 <option value="Motor Bill">Motor Bill</option>
                 <option value="Gas Bill">Gas Bill</option>
                 <option value="Mridul Kanti Dey">Mridul Kanti Dey</option>
-                <option value="Rita Dey">Rita Dey</option>
+                <option value="Rita Dey">Rita Dey</soption>
                 <option value="Angshu Debray">Angshu Debray</option>
                 <option value="Pijush Kanti Dey">Pijush Kanti Dey</option>
                 <option value="Enter Custom Data">Enter Custom Data</option>
@@ -35,6 +35,7 @@ window.renderBillFormView = function(targetElement) { // <<< ADDED window.
                 <label for="meter_number_custom">Enter your Meter Number:</label>
                 <input type="text" id="meter_number_custom" name="meter_number_custom"><br><br>
             </div>
+
 
             <!-- Billing Month -->
             <label for="billing_month">Enter Billing Month:</label>
@@ -136,15 +137,19 @@ window.renderBillFormView = function(targetElement) { // <<< ADDED window.
 
     // Expose functions to the global scope for onclick/onchange attributes
     window.billFormFunctions = {
+        createTransactionFieldHtml, // Needed by addTransactionField
         showBillFields,
         addTransactionField,
         resetTransactionFields,
         resetRequiredAttributes,
         handleFormSubmission
     };
+    console.log('billFormView.js: Bill Form page rendered and functions exposed.'); // Debugging
 }
 
 // --- JavaScript functions for Bill Form Logic (moved from Flask template script) ---
+// These functions are now part of the billFormView.js scope, exposed via window.billFormFunctions
+// but their definitions are here.
 function createTransactionFieldHtml(sectionId) {
     return `
         <div class="transaction-group">
@@ -183,7 +188,7 @@ function showBillFields() {
         console.log("Predefined user selected:", userSelect);
         document.getElementById("selectedUserDetailsDisplay").style.display = "block";
 
-        const selectedUserData = FIXED_DATA[userSelect]; // Use FIXED_DATA here
+        const selectedUserData = FIXED_DATA[userSelect];
         document.getElementById("displayConsumerId").textContent = selectedUserData.consumer_id || 'N/A';
         document.getElementById("displayMeterNumber").textContent = selectedUserData.meter_number || 'N/A';
 
