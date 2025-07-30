@@ -5,16 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initializeRouter('app-content');
 
-    // --- CRUCIAL FIX: Directly pass the view functions as arguments ---
-    // Ensure these functions are defined and accessible in the global scope
-    // OR load them before app.js if they are in separate files.
-    // By loading js/views/*.js files in index.html BEFORE app.js, they become global.
-    // So, we can just reference them directly here.
+    // --- CRUCIAL FIX: Reference globally exposed view functions ---
+    addRoute('home', window.renderHomeView);
+    addRoute('calculator', window.renderCalculatorView);
+    addRoute('bill_form', window.renderBillFormView);
+    addRoute('invoice', window.renderInvoiceView);
 
-    addRoute('home', renderHomeView);
-    addRoute('calculator', renderCalculatorView);
-    addRoute('bill_form', renderBillFormView);
-    addRoute('invoice', renderInvoiceView); // Assuming invoiceView.js is also loaded
-
-    // Initial route is handled by initializeRouter after routes are added
+    console.log('app.js: Router initialized and routes added.');
 });
