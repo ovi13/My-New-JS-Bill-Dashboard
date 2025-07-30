@@ -41,94 +41,100 @@ export function renderInvoiceView(targetElement) {
         <p><strong>Billing Date:</strong> ${invoiceData.billing_date || 'N/A'}</p>
         <p><strong>Billing Time:</strong> ${invoiceData.billing_time || 'N/A'}</p>
 
-        <h2>Bill Breakdown:</h2>
-        <table class="invoice-table">
-            <thead>
-                <tr>
-                    <th>Bill Type</th>
-                    <th class="numeric">Amount (৳)</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${electricity_bill > 0 ? `
-                <tr>
-                    <td>Electricity Bill (Total):</td>
-                    <td class="numeric">৳${electricity_bill.toFixed(2)}</td>
-                </tr>` : ''}
+        <div class="invoice-section-box">
+            <h2>Bill Breakdown:</h2>
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Bill Type</th>
+                        <th class="numeric">Amount (৳)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${electricity_bill > 0 ? `
+                    <tr>
+                        <td>Electricity Bill (Total):</td>
+                        <td class="numeric">৳${electricity_bill.toFixed(2)}</td>
+                    </tr>` : ''}
 
-                ${motor_bill > 0 ? `
-                <tr>
-                    <td>Motor Bill (Total):</td>
-                    <td class="numeric">৳${motor_bill.toFixed(2)}</td>
-                </tr>` : ''}
+                    ${motor_bill > 0 ? `
+                    <tr>
+                        <td>Motor Bill (Total):</td>
+                        <td class="numeric">৳${motor_bill.toFixed(2)}</td>
+                    </tr>` : ''}
 
-                ${invoiceData.name === "Motor Bill" && motor_bill > 0 ? `
-                <tr>
-                    <td>Mridul's Share (Motor Bill):</td>
-                    <td class="numeric">৳${motor_bill_mridul.toFixed(2)}</td>
-                </tr>
-                <tr>
-                    <td>Rita's Share (Motor Bill):</td>
-                    <td class="numeric">৳${motor_bill_rita.toFixed(2)}</td>
-                </tr>` : ''}
+                    ${invoiceData.name === "Motor Bill" && motor_bill > 0 ? `
+                    <tr>
+                        <td>Mridul's Share (Motor Bill):</td>
+                        <td class="numeric">৳${motor_bill_mridul.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td>Rita's Share (Motor Bill):</td>
+                        <td class="numeric">৳${motor_bill_rita.toFixed(2)}</td>
+                    </tr>` : ''}
 
-                ${gas_bill > 0 ? `
-                <tr>
-                    <td>Gas Bill (Total):</td>
-                    <td class="numeric">৳${gas_bill.toFixed(2)}</td>
-                </tr>` : ''}
+                    ${gas_bill > 0 ? `
+                    <tr>
+                        <td>Gas Bill (Total):</td>
+                        <td class="numeric">৳${gas_bill.toFixed(2)}</td>
+                    </tr>` : ''}
 
-                ${invoiceData.name === "Gas Bill" ? `
-                <tr>
-                    <td>Mridul's Share (Gas Bill):</td>
-                    <td class="numeric">৳${gas_bill_mridul.toFixed(2)}</td>
-                </tr>
-                <tr>
-                    <td>Pappu's Share (Gas Bill):</td>
-                    <td class="numeric">৳${gas_bill_pappu.toFixed(2)}</td>
-                </tr>
-                <tr>
-                    <td>Rita's Share (Gas Bill):</td>
-                    <td class="numeric">৳${gas_bill_rita.toFixed(2)}</td>
-                </tr>
-                <tr>
-                    <td>Pijush's Share (Gas Bill):</td>
-                    <td class="numeric">৳${gas_bill_pijush.toFixed(2)}</td>
-                </tr>` : ''}
+                    ${invoiceData.name === "Gas Bill" ? `
+                    <tr>
+                        <td>Mridul's Share (Gas Bill):</td>
+                        <td class="numeric">৳${gas_bill_mridul.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td>Pappu's Share (Gas Bill):</td>
+                        <td class="numeric">৳${gas_bill_pappu.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td>Rita's Share (Gas Bill):</td>
+                        <td class="numeric">৳${gas_bill_rita.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td>Pijush's Share (Gas Bill):</td>
+                        <td class="numeric">৳${gas_bill_pijush.toFixed(2)}</td>
+                    </tr>` : ''}
 
-                ${bkash_charge > 0 ? `
-                <tr>
-                    <td>Bkash Charge:</td>
-                    <td class="numeric">৳${bkash_charge.toFixed(2)}</td>
-                </tr>` : ''}
-            </tbody>
-        </table>
+                    ${bkash_charge > 0 ? `
+                    <tr>
+                        <td>Bkash Charge:</td>
+                        <td class="numeric">৳${bkash_charge.toFixed(2)}</td>
+                    </tr>` : ''}
+                </tbody>
+            </table>
+        </div>
 
         ${invoiceData.combined_transactions && invoiceData.combined_transactions.length > 0 ? `
-        <h3>Transaction Details:</h3>
-        <table class="invoice-table">
-            <thead>
-                <tr>
-                    <th>Transaction Type</th>
-                    <th>Transaction ID</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${invoiceData.combined_transactions.map(trans => `
-                <tr>
-                    <td>${trans.type}:</td>
-                    <td>${trans.id}</td>
-                </tr>`).join('')}
-            </tbody>
-        </table>` : ''}
+        <div class="invoice-section-box">
+            <h3>Transaction Details:</h3>
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Transaction Type</th>
+                        <th>Transaction ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${invoiceData.combined_transactions.map(trans => `
+                    <tr>
+                        <td>${trans.type}:</td>
+                        <td>${trans.id}</td>
+                    </tr>`).join('')}
+                </tbody>
+            </table>
+        </div>` : ''}
 
-        <h3>Total Bill: ৳${total_bill.toFixed(2)}</h3>
-        <p><strong>Amount Paid:</strong> ৳${total_paid.toFixed(2)}</p>
+        <div class="invoice-section-box invoice-summary-box">
+            <h3>Total Bill: ৳${total_bill.toFixed(2)}</h3>
+            <p><strong>Amount Paid:</strong> ৳${total_paid.toFixed(2)}</p>
 
-        ${balance < 0 ? `
-        <p><strong>Balance Due:</strong> ৳${Math.abs(balance).toFixed(2)}</p>` : balance > 0 ? `
-        <p><strong>Balance Returned:</strong> ৳${balance.toFixed(2)}</p>` : `
-        <p><strong>Balance:</strong> ৳${balance.toFixed(2)}</p>`}
+            ${balance < 0 ? `
+            <p><strong>Balance Due:</strong> ৳${Math.abs(balance).toFixed(2)}</p>` : balance > 0 ? `
+            <p><strong>Balance Returned:</strong> ৳${balance.toFixed(2)}</p>` : `
+            <p><strong>Balance:</strong> ৳${balance.toFixed(2)}</p>`}
+        </div>
 
         <p>This is a computer programming generated invoice, does not require any signature.</p>
 
