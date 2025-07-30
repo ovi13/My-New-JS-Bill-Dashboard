@@ -1,12 +1,23 @@
 // js/views/billFormView.js
-import { FIXED_DATA, calculateInvoiceTotals } from '../data.js'; // <<< IMPORT FIXED_DATA and calculateInvoiceTotals
+import { FIXED_DATA, calculateInvoiceTotals } from '../data.js';
 
 // Store current invoice data in a global variable for invoiceView to access
-// This is still needed because invoiceView is a separate module that needs this data.
 window.currentInvoiceData = null;
 
+// --- CRITICAL FIX: Define window.billFormFunctions at the top of the module ---
+// This ensures it exists and is populated before any render function tries to use it.
+// We assign the actual functions *after* their definitions below.
+window.billFormFunctions = {
+    createTransactionFieldHtml: null, // Will be assigned later
+    showBillFields: null,
+    addTransactionField: null,
+    resetTransactionFields: null,
+    resetRequiredAttributes: null,
+    handleFormSubmission: null
+};
+
 // Function to render the bill form page content
-export function renderBillFormView(targetElement) { // <<< REMOVED 'window.' and ADDED 'export'
+export function renderBillFormView(targetElement) {
     const billFormHtml = `
         <h1>Utility Bill Generator</h1>
         <form id="invoiceForm">
@@ -15,7 +26,7 @@ export function renderBillFormView(targetElement) { // <<< REMOVED 'window.' and
                 <option value="">--Select Bill Type or User--</option>
                 <option value="Motor Bill">Motor Bill</option>
                 <option value="Gas Bill">Gas Bill</option>
-                <option value="Mridul Kanti Dey">Mridul Kanti Dey</soption>
+                <option value="Mridul Kanti Dey">Mridul Kanti Dey</option>
                 <option value="Rita Dey">Rita Dey</option>
                 <option value="Angshu Debray">Angshu Debray</option>
                 <option value="Pijush Kanti Dey">Pijush Kanti Dey</option>
@@ -134,24 +145,14 @@ export function renderBillFormView(targetElement) { // <<< REMOVED 'window.' and
     }
 
     // Initial call to set up fields based on default selection
-    // Use a small timeout to ensure DOM elements are fully available after innerHTML
+    // This call will now work because window.billFormFunctions is defined at module scope.
     setTimeout(() => window.billFormFunctions.showBillFields(), 0); 
 
-    // Expose functions to the global scope for onclick/onchange attributes
-    window.billFormFunctions = {
-        createTransactionFieldHtml, // Needed by addTransactionField
-        showBillFields,
-        addTransactionField,
-        resetTransactionFields,
-        resetRequiredAttributes,
-        handleFormSubmission
-    };
     console.log('billFormView.js: Bill Form page rendered and functions exposed.'); // Debugging
 }
 
 // --- JavaScript functions for Bill Form Logic ---
-// These functions are now part of the billFormView.js module scope.
-// They are exposed globally via window.billFormFunctions for inline HTML attributes.
+// These functions are defined here and then referenced in window.billFormFunctions.
 function createTransactionFieldHtml(sectionId) {
     return `
         <div class="transaction-group">
@@ -167,6 +168,17 @@ function createTransactionFieldHtml(sectionId) {
         </div>
     `;
 }
+
+// --- Assign the actual functions to the global object after they are defined ---
+// This ensures that when the render function runs, these are already available.
+// NOTE: These assignments must come AFTER the function definitions themselves.
+window.billFormFunctions.createTransactionFieldHtml = createTransactionFieldHtml;
+window.billFormFunctions.showBillFields = showBillFields;
+window.billFormFunctions.addTransactionField = addTransactionField;
+window.billFormFunctions.resetTransactionFields = resetTransactionFields;
+window.billFormFunctions.resetRequiredAttributes = resetRequiredAttributes;
+window.billFormFunctions.handleFormSubmission = handleFormSubmission;
+
 
 function showBillFields() {
     var userSelect = document.getElementById("user").value;
