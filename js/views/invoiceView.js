@@ -1,14 +1,13 @@
 // js/views/invoiceView.js
 
 // Store current invoice data in a global variable for invoiceView to access
-window.currentInvoiceData = null;
+window.currentInvoiceData = null; // Still needed as it's set by billFormView
 
 // Function to render the invoice page content
-window.renderInvoiceView = function(targetElement) {
+export function renderInvoiceView(targetElement) { // <<< REMOVED 'window.' and ADDED 'export'
     const invoiceData = window.currentInvoiceData || {}; // Get data from global variable
 
     // Safely parse all numeric values just before using them in the HTML
-    // This prevents errors if a value is null, undefined, or a non-numeric string
     const electricity_bill = parseFloat(invoiceData.electricity_bill) || 0;
     const motor_bill = parseFloat(invoiceData.motor_bill) || 0;
     const gas_bill = parseFloat(invoiceData.gas_bill) || 0;
@@ -134,7 +133,7 @@ window.renderInvoiceView = function(targetElement) {
         <p>This is a computer programming generated invoice, does not require any signature.</p>
 
         <div class="button-container">
-            <button onclick="invoiceFunctions.downloadPDF()">Download PDF</button>
+            <button onclick="window.invoiceFunctions.downloadPDF()">Download PDF</button>
             <button onclick="window.print()">Print Invoice</button>
         </div>
     `;
@@ -147,7 +146,7 @@ window.renderInvoiceView = function(targetElement) {
     console.log('invoiceView.js: Invoice page rendered.'); // Debugging
 }
 
-// PDF download function (moved from Flask template script)
+// PDF download function (now part of the module, exposed globally via window.invoiceFunctions)
 function downloadPDF() {
     console.log("Download PDF button clicked!");
     const element = document.querySelector('#app-content .container'); // Target the dynamically loaded container
