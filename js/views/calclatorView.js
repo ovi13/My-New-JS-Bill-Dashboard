@@ -99,7 +99,7 @@ window.renderCalculatorView = function(targetElement) { // <<< ADDED window.
     targetElement.innerHTML = calculatorHtml;
 
     // Attach event listeners and run calculations after HTML is rendered
-    // Use a global object to expose functions to oninput attributes
+    // Expose functions to the global scope for oninput attributes
     window.calculatorFunctions = {
         calculateRow,
         calculateNetTotals,
@@ -107,7 +107,9 @@ window.renderCalculatorView = function(targetElement) { // <<< ADDED window.
         calculateAll
     };
     // Initial calculation call when the view is loaded by the router
-    calculatorFunctions.calculateAll();
+    // Use a timeout to ensure DOM elements are fully available after innerHTML
+    setTimeout(calculatorFunctions.calculateAll, 0); 
+    console.log('calculatorView.js: Calculator page rendered and calculations initialized.'); // Debugging
 }
 
 // --- JavaScript functions for Calculator Logic (moved from Flask template script) ---
