@@ -1,20 +1,22 @@
 // js/views/billFormView.js
+import { FIXED_DATA, calculateInvoiceTotals } from '../data.js'; // <<< IMPORT FIXED_DATA and calculateInvoiceTotals
 
 // Store current invoice data in a global variable for invoiceView to access
+// This is still needed because invoiceView is a separate module that needs this data.
 window.currentInvoiceData = null;
 
 // Function to render the bill form page content
-window.renderBillFormView = function(targetElement) { // <<< ADDED window.
+export function renderBillFormView(targetElement) { // <<< REMOVED 'window.' and ADDED 'export'
     const billFormHtml = `
         <h1>Utility Bill Generator</h1>
         <form id="invoiceForm">
             <label for="user">Select Bill Type or User:</label>
-            <select id="user" name="user" onchange="billFormFunctions.showBillFields()" required>
+            <select id="user" name="user" onchange="window.billFormFunctions.showBillFields()" required>
                 <option value="">--Select Bill Type or User--</option>
                 <option value="Motor Bill">Motor Bill</option>
                 <option value="Gas Bill">Gas Bill</option>
-                <option value="Mridul Kanti Dey">Mridul Kanti Dey</option>
-                <option value="Rita Dey">Rita Dey</soption>
+                <option value="Mridul Kanti Dey">Mridul Kanti Dey</soption>
+                <option value="Rita Dey">Rita Dey</option>
                 <option value="Angshu Debray">Angshu Debray</option>
                 <option value="Pijush Kanti Dey">Pijush Kanti Dey</option>
                 <option value="Enter Custom Data">Enter Custom Data</option>
@@ -55,7 +57,7 @@ window.renderBillFormView = function(targetElement) { // <<< ADDED window.
                 <div id="transactionFieldsContainer_motor">
                     <!-- Initial transaction fields will be added here by JavaScript -->
                 </div>
-                <button type="button" onclick="billFormFunctions.addTransactionField('motor')">Add Another Transaction</button><br><br>
+                <button type="button" onclick="window.billFormFunctions.addTransactionField('motor')">Add Another Transaction</button><br><br>
             </div>
 
             <!-- Gas Bill Fields (hidden by default) -->
@@ -72,7 +74,7 @@ window.renderBillFormView = function(targetElement) { // <<< ADDED window.
                 <div id="transactionFieldsContainer_gas">
                     <!-- Initial transaction fields will be added here by JavaScript -->
                 </div>
-                <button type="button" onclick="billFormFunctions.addTransactionField('gas')">Add Another Transaction</button><br><br>
+                <button type="button" onclick="window.billFormFunctions.addTransactionField('gas')">Add Another Transaction</button><br><br>
             </div>
 
             <!-- Custom User Fields (This section will now only contain specific bill inputs, name/id/meter are above) -->
@@ -91,7 +93,7 @@ window.renderBillFormView = function(targetElement) { // <<< ADDED window.
                 <div id="transactionFieldsContainer_custom">
                     <!-- Initial transaction fields will be added here by JavaScript -->
                 </div>
-                <button type="button" onclick="billFormFunctions.addTransactionField('custom')">Add Another Transaction</button><br><br>
+                <button type="button" onclick="window.billFormFunctions.addTransactionField('custom')">Add Another Transaction</button><br><br>
             </div>
 
             <!-- Individual Predefined User Fields -->
@@ -112,7 +114,7 @@ window.renderBillFormView = function(targetElement) { // <<< ADDED window.
                 <div id="transactionFieldsContainer_individual">
                     <!-- Initial transaction fields will be added here by JavaScript -->
                 </div>
-                <button type="button" onclick="billFormFunctions.addTransactionField('individual')">Add Another Transaction</button><br><br>
+                <button type="button" onclick="window.billFormFunctions.addTransactionField('individual')">Add Another Transaction</button><br><br>
             </div>
 
             <button type="submit">Generate Invoice</button>
@@ -123,17 +125,17 @@ window.renderBillFormView = function(targetElement) { // <<< ADDED window.
     // Attach event listeners after HTML is rendered
     const userSelectElement = document.getElementById('user');
     if (userSelectElement) {
-        userSelectElement.addEventListener('change', billFormFunctions.showBillFields);
+        userSelectElement.addEventListener('change', window.billFormFunctions.showBillFields);
     }
     
     const invoiceForm = document.getElementById('invoiceForm');
     if (invoiceForm) {
-        invoiceForm.addEventListener('submit', billFormFunctions.handleFormSubmission);
+        invoiceForm.addEventListener('submit', window.billFormFunctions.handleFormSubmission);
     }
 
     // Initial call to set up fields based on default selection
     // Use a small timeout to ensure DOM elements are fully available after innerHTML
-    setTimeout(() => billFormFunctions.showBillFields(), 0); 
+    setTimeout(() => window.billFormFunctions.showBillFields(), 0); 
 
     // Expose functions to the global scope for onclick/onchange attributes
     window.billFormFunctions = {
@@ -147,9 +149,9 @@ window.renderBillFormView = function(targetElement) { // <<< ADDED window.
     console.log('billFormView.js: Bill Form page rendered and functions exposed.'); // Debugging
 }
 
-// --- JavaScript functions for Bill Form Logic (moved from Flask template script) ---
-// These functions are now part of the billFormView.js scope, exposed via window.billFormFunctions
-// but their definitions are here.
+// --- JavaScript functions for Bill Form Logic ---
+// These functions are now part of the billFormView.js module scope.
+// They are exposed globally via window.billFormFunctions for inline HTML attributes.
 function createTransactionFieldHtml(sectionId) {
     return `
         <div class="transaction-group">
@@ -184,11 +186,11 @@ function showBillFields() {
         document.getElementById("customUserDetailsInput").style.display = "block";
         document.getElementById("customUserFields").style.display = "block";
         activeSectionId = 'custom';
-    } else if (FIXED_DATA.hasOwnProperty(userSelect)) { // Use FIXED_DATA from data.js
+    } else if (FIXED_DATA.hasOwnProperty(userSelect)) { // Use imported FIXED_DATA
         console.log("Predefined user selected:", userSelect);
         document.getElementById("selectedUserDetailsDisplay").style.display = "block";
 
-        const selectedUserData = FIXED_DATA[userSelect]; // Use FIXED_DATA here
+        const selectedUserData = FIXED_DATA[userSelect];
         document.getElementById("displayConsumerId").textContent = selectedUserData.consumer_id || 'N/A';
         document.getElementById("displayMeterNumber").textContent = selectedUserData.meter_number || 'N/A';
 
@@ -309,7 +311,7 @@ function handleFormSubmission(event) {
             }
         }
 
-    } else if (FIXED_DATA.hasOwnProperty(invoiceData.user)) {
+    } else if (FIXED_DATA.hasOwnProperty(invoiceData.user)) { // Use imported FIXED_DATA
         const selectedUserData = FIXED_DATA[invoiceData.user];
         invoiceData.consumer_id = selectedUserData.consumer_id || '';
         invoiceData.meter_number = selectedUserData.meter_number || '';
@@ -357,6 +359,7 @@ function handleFormSubmission(event) {
         }
     }
 
+    // Use imported calculateInvoiceTotals
     const { total_bill, balance } = calculateInvoiceTotals(
         invoiceData.gas_bill,
         invoiceData.electricity_bill,
