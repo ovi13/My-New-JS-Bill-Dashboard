@@ -443,9 +443,11 @@ button:active {
         padding: 2mm; /* Ultra-small padding for the container */
         box-shadow: none;
         border-radius: 0;
+        /* --- CRITICAL: Force content on one page --- */
         min-height: 270mm; /* A4 height is ~297mm. Set a very high minimum to prevent browser splitting */
         page-break-after: avoid !important; /* Try to prevent a break after the container */
         page-break-inside: avoid !important; /* Try to keep container on one page */
+        /* --- END CRITICAL --- */
     }
     h1 {
         font-size: 1.5em; /* Smaller h1 */
@@ -464,15 +466,13 @@ button:active {
         text-align: center;
         width: 100%;
     }
-    p { /* Specific for paragraphs outside .bill-item */
-        font-size: 0.75em; /* Smallest text for paragraphs */
-        margin-bottom: 1px; /* Minimal space */
-        line-height: 1.05; /* Very tight line height */
-    }
-    .bill-item { /* This now mostly targets info like Consumer ID, Meter No */
-        font-size: 0.75em; /* Smallest text for bill items */
+    p, .bill-item { /* Combined for general text and bill items */
+        font-size: 0.75em; /* Smallest body text for paragraphs and bill items */
         margin-bottom: 1px; /* Minimal space between items */
         line-height: 1.05; /* Very tight line height */
+        page-break-inside: avoid; /* Crucial for preventing splitting of bill items */
+    }
+    .bill-item {
         padding: 1px 0; /* Minimal padding for print items */
         background-color: transparent;
         box-shadow: none;
@@ -481,7 +481,6 @@ button:active {
         margin-left: 0;
         margin-right: 0;
         justify-content: space-between;
-        page-break-inside: avoid; /* Crucial for preventing splitting of individual rows */
     }
     .bill-item:last-of-type {
         border-bottom: none;
@@ -516,7 +515,7 @@ button:active {
         margin-bottom: 8px; /* Reduced print margin */
     }
     .button-container {
-        display: none;
+        display: none; /* Hide buttons in print */
     }
 
     /* Calculator print styles - make it compact */
@@ -524,7 +523,7 @@ button:active {
         font-size: 0.55em; /* Even smaller font for printing tables */
         grid-template-columns: 1.5fr repeat(7, 1fr);
         border: 1px solid #ccc;
-        page-break-inside: avoid;
+        page-break-inside: avoid; /* Prevent table from breaking in half */
     }
     .header-cell, .row-label, .input-cell, .output-cell {
         padding: 1px 1px; /* Minimal padding for print */
