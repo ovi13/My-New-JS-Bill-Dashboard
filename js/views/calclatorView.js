@@ -6,7 +6,7 @@ export function renderCalculatorView(targetElement) { // <<< REMOVED 'window.' a
 
         <div class="excel-header">
             <label for="sharedMotorBillTotal">Total Water Bill of Our and Mamoni (10501785):</label>
-            <input type="number" id="sharedMotorBillTotal" value="994" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"> ৳
+            <input type="number" id="sharedMotorBillTotal" value="994" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"> ৳
         </div>
 
         <div class="calculator-table">
@@ -25,23 +25,23 @@ export function renderCalculatorView(targetElement) { // <<< REMOVED 'window.' a
             <div class="table-row" id="mridul1Row">
                 <div class="row-label">Mridul 1 (250145):</div>
                 <div class="input-cell"><input type="number" class="gas-bill readonly-value" value="2160" readonly></div>
-                <div class="input-cell"><input type="number" class="electricity-bill" value="2084" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="motor-bill" value="497" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="bkash-charge" value="25" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="electricity-bill" value="2084" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="motor-bill" value="497" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="bkash-charge" value="25" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell total-bill">0</div>
-                <div class="input-cell"><input type="number" class="total-paid" value="5000" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="total-paid" value="5000" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell return-amount">0</div>
             </div>
 
             <!-- Mridul 2 (094221) -->
             <div class="table-row" id="mridul2Row">
                 <div class="row-label">Mridul 2 (094221):</div>
-                <div class="input-cell"><input type="number" class="gas-bill" value="0" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="electricity-bill" value="1667" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="motor-bill" value="0" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="bkash-charge" value="15" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="gas-bill" value="0" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="electricity-bill" value="1667" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="motor-bill" value="0" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="bkash-charge" value="15" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell total-bill">0</div>
-                <div class="input-cell"><input type="number" class="total-paid" value="1700" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="total-paid" value="1700" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell return-amount">0</div>
             </div>
 
@@ -49,11 +49,11 @@ export function renderCalculatorView(targetElement) { // <<< REMOVED 'window.' a
             <div class="table-row" id="ritaMamoniRow">
                 <div class="row-label">Rita (Mamoni) (094222):</div>
                 <div class="input-cell"><input type="number" class="gas-bill readonly-value" value="1080" readonly></div>
-                <div class="input-cell"><input type="number" class="electricity-bill" value="2217" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="motor-bill" value="497" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="bkash-charge" value="15" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="electricity-bill" value="2217" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="motor-bill" value="497" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="bkash-charge" value="15" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell total-bill">0</div>
-                <div class="input-cell"><input type="number" class="total-paid" value="4000" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="total-paid" value="4000" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell return-amount">0</div>
             </div>
 
@@ -61,11 +61,11 @@ export function renderCalculatorView(targetElement) { // <<< REMOVED 'window.' a
             <div class="table-row" id="ritaBoumoniRow">
                 <div class="row-label">Rita (Boumoni) (27023):</div>
                 <div class="input-cell"><input type="number" class="gas-bill readonly-value" value="1080" readonly></div>
-                <div class="input-cell"><input type="number" class="electricity-bill" value="1106" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="motor-bill" value="0" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="bkash-charge" value="15" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="electricity-bill" value="1106" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="motor-bill" value="0" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="bkash-charge" value="15" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell total-bill">0</div>
-                <div class="input-cell"><input type="number" class="total-paid" value="2201" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="total-paid" value="2201" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell return-amount">0</div>
             </div>
 
@@ -73,11 +73,11 @@ export function renderCalculatorView(targetElement) { // <<< REMOVED 'window.' a
             <div class="table-row" id="bordaRow">
                 <div class="row-label">Borda:</div>
                 <div class="input-cell"><input type="number" class="gas-bill readonly-value" value="2160" readonly></div>
-                <div class="input-cell"><input type="number" class="electricity-bill" value="0" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="motor-bill" value="0" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
-                <div class="input-cell"><input type="number" class="bkash-charge" value="10" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="electricity-bill" value="0" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="motor-bill" value="0" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="bkash-charge" value="10" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell total-bill">0</div>
-                <div class="input-cell"><input type="number" class="total-paid" value="2170" min="0" step="0.01" oninput="calculatorFunctions.calculateAll()"></div>
+                <div class="input-cell"><input type="number" class="total-paid" value="2170" min="0" step="0.01" oninput="window.calculatorFunctions.calculateAll()"></div>
                 <div class="output-cell return-amount">0</div>
             </div>
 
@@ -97,20 +97,20 @@ export function renderCalculatorView(targetElement) { // <<< REMOVED 'window.' a
     `;
     targetElement.innerHTML = calculatorHtml;
 
-    // Attach event listeners and run calculations after HTML is rendered
-    window.calculatorFunctions = { // Expose functions globally for oninput attributes
+    // Expose functions to the global scope for oninput attributes
+    window.calculatorFunctions = {
         calculateRow,
         calculateNetTotals,
         handleSharedMotorBill,
         calculateAll
     };
     // Initial calculation call when the view is loaded by the router
-    setTimeout(calculatorFunctions.calculateAll, 0); 
+    setTimeout(window.calculatorFunctions.calculateAll, 0); 
     console.log('calculatorView.js: Calculator page rendered and calculations initialized.');
 }
 
-// --- JavaScript functions for Calculator Logic (moved from Flask template script) ---
-// These are now regular functions within the module scope, implicitly part of `calculatorView.js`
+// --- JavaScript functions for Calculator Logic ---
+// These are now regular functions within the module scope.
 function calculateRow(rowId) {
     const row = document.getElementById(rowId);
     if (!row) return;
