@@ -18,13 +18,14 @@
         Loading application...
     </div>
 
-    <!-- Load JavaScript files at the end of body for performance -->
+    <!-- Load JavaScript files in correct order -->
     <script src="js/data.js"></script>
-    <script src="js/router.js"></script>
+    <!-- Views must be loaded before app.js so their functions are defined -->
     <script src="js/views/homeView.js"></script>
     <script src="js/views/calculatorView.js"></script>
     <script src="js/views/billFormView.js"></script>
     <script src="js/views/invoiceView.js"></script>
+    <!-- Main app logic with router is loaded last -->
     <script src="js/app.js"></script>
     <!-- html2pdf.js for invoice page -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
