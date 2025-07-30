@@ -1,16 +1,17 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f7fc; /* Fallback color */
+    background-color: #f4f7fc; /* Simplified to a solid, clean background color */
     color: #333;
     margin: 0;
     padding: 0;
-    /* --- START Fancy Background Changes --- */
-    /* Multiple backgrounds: pattern first, then gradient */
+    /* --- REMOVED All Fancy Background Changes (stars and gradient) --- */
+    /*
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M5 0L6.18 3.63L10 3.82L7.09 6.18L8.18 10L5 7.73L1.82 10L2.91 6.18L0 3.82L3.82 3.63L5 0Z' fill='%23ccc' opacity='0.2'/%3E%3C/svg%3E"), linear-gradient(to right, #ece9e6, #ffffff);
-    background-repeat: repeat, no-repeat; /* Repeat the pattern, don't repeat the gradient */
-    background-position: 0 0, center center; /* Position for pattern, then for gradient */
-    background-size: auto, cover; /* Auto size for pattern, cover for gradient */
-    /* --- END Fancy Background Changes --- */
+    background-repeat: repeat, no-repeat;
+    background-position: 0 0, center center;
+    background-size: auto, cover;
+    */
+    /* --- END REMOVED Fancy Background Changes --- */
 }
 
 .navbar {
@@ -424,18 +425,19 @@ button:active {
 }
 
 
-/* --- Removed Analytics Specific Styles --- */
-
-
-/* --- Print Specific Styles --- */
-/* ... (existing CSS above) ... */
-
-/* --- Print Specific Styles --- */
+/*
+--- Print Specific Styles --- */
 @media print {
+    /* Set page size and orientation for print dialog */
+    @page {
+        size: A4 landscape; /* Set to A4 and force landscape orientation */
+        margin: 0; /* Extremely minimal margins for the print dialog itself */
+    }
+
     body {
         margin: 0;
         padding: 0;
-        font-size: 6pt; /* Even smaller font for maximum print compression */
+        font-size: 5pt; /* VERY SMALL font for maximum print compression */
         background-image: none !important;
         background: none !important;
         background-color: white !important;
@@ -447,21 +449,22 @@ button:active {
         box-shadow: none;
         border-radius: 0;
         /* --- CRITICAL: Force content on one page --- */
-        min-height: 270mm; /* A4 height is ~297mm. Set a very high minimum to prevent browser splitting */
+        /* min-height is less relevant with landscape, but keep for safety */
+        min-height: 200mm; /* Adjusted for landscape A4 height (~210mm) */
         page-break-after: avoid !important; /* Try to prevent a break after the container */
         page-break-inside: avoid !important; /* Try to keep container on one page */
         /* --- END CRITICAL --- */
     }
     h1 {
-        font-size: 1.1em; /* Smaller h1 */
+        font-size: 1em; /* Smaller h1 */
         margin-top: 0 !important; /* Force zero top margin */
-        margin-bottom: 3px !important; /* Reduced margin */
+        margin-bottom: 2px !important; /* Reduced margin */
         padding-top: 0 !important; /* Force zero top padding */
     }
     h2, h3, h4 {
         font-size: 0.7em; /* Smaller h2, h3, h4 */
-        margin-top: 3px !important; /* Reduced margin */
-        margin-bottom: 2px !important; /* Reduced margin */
+        margin-top: 2px !important; /* Reduced margin */
+        margin-bottom: 1px !important; /* Reduced margin */
         margin-left: 0;
         margin-right: 0;
         page-break-after: avoid; /* Keep headings with content below */
@@ -472,13 +475,13 @@ button:active {
         width: 100%;
     }
     p, .bill-item { /* Combined for general text and bill items */
-        font-size: 0.6em; /* Smallest body text for paragraphs and bill items */
-        margin-bottom: 0.2px !important; /* Minimal space between items */
+        font-size: 0.55em; /* Smallest body text for paragraphs and bill items */
+        margin-bottom: 0.1px !important; /* Minimal space between items */
         line-height: 1.0; /* Very tight line height */
         page-break-inside: avoid; /* Crucial for preventing splitting of bill items */
     }
     .bill-item {
-        padding: 0.2px 0 !important; /* Minimal padding for print items */
+        padding: 0.1px 0 !important; /* Minimal padding for print items */
         background-color: transparent;
         box-shadow: none;
         border-bottom: 1px dashed #ccc;
@@ -491,16 +494,16 @@ button:active {
         border-bottom: none;
     }
     .invoice-table { /* New styles for the tables within invoice */
-        font-size: 0.55em; /* Smallest possible font for tables in print */
-        margin-top: 2px !important; /* Minimal margin above tables */
-        margin-bottom: 3px !important; /* Minimal margin below tables */
+        font-size: 0.5em; /* Smallest possible font for tables in print */
+        margin-top: 1px !important; /* Minimal margin above tables */
+        margin-bottom: 2px !important; /* Minimal margin below tables */
         width: 100%;
         border-collapse: collapse;
         page-break-inside: avoid; /* Prevent table content from breaking in half */
     }
     .invoice-table th, .invoice-table td {
         border: 1px solid #ddd;
-        padding: 0.2px 0.5px !important; /* Super minimal padding */
+        padding: 0.1px 0.2px !important; /* Super minimal padding */
         text-align: left;
         line-height: 1.0; /* Tight line height */
     }
@@ -516,8 +519,8 @@ button:active {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 3px !important; /* Reduced print margin */
-        margin-bottom: 3px !important; /* Reduced print margin */
+        margin-top: 2px !important; /* Reduced print margin */
+        margin-bottom: 2px !important; /* Reduced print margin */
     }
     .button-container {
         display: none; /* Hide buttons in print */
@@ -525,13 +528,13 @@ button:active {
 
     /* Calculator print styles - make it compact */
     .calculator-table {
-        font-size: 0.45em; /* Even smaller font for printing tables */
+        font-size: 0.4em; /* Even smaller font for printing tables */
         grid-template-columns: 1.5fr repeat(7, 1fr);
         border: 1px solid #ccc;
         page-break-inside: avoid; /* Prevent table from breaking in half */
     }
     .header-cell, .row-label, .input-cell, .output-cell {
-        padding: 0.2px 0.2px !important; /* Minimal padding for print */
+        padding: 0.1px 0.1px !important; /* Minimal padding for print */
         border-bottom: 1px solid #eee;
         border-right: 1px solid #eee;
     }
@@ -540,7 +543,7 @@ button:active {
     }
     .input-cell input[type="number"] {
         padding: 0px !important; /* No padding */
-        font-size: 0.5em;
+        font-size: 0.45em;
     }
     /* Hide mobile ::before labels in print */
     .table-row .input-cell::before,
