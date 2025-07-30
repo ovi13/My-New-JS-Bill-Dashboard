@@ -4,7 +4,7 @@
 window.currentInvoiceData = null;
 
 // Function to render the bill form page content
-window.renderBillFormView = function(targetElement) {
+window.renderBillFormView = function(targetElement) { // <<< ADDED window.
     const billFormHtml = `
         <h1>Utility Bill Generator</h1>
         <form id="invoiceForm">
@@ -133,7 +133,7 @@ window.renderBillFormView = function(targetElement) {
 
     // Initial call to set up fields based on default selection
     // Use a small timeout to ensure DOM elements are fully available after innerHTML
-    setTimeout(billFormFunctions.showBillFields, 0); 
+    setTimeout(() => billFormFunctions.showBillFields(), 0); 
 
     // Expose functions to the global scope for onclick/onchange attributes
     window.billFormFunctions = {
@@ -188,7 +188,7 @@ function showBillFields() {
         console.log("Predefined user selected:", userSelect);
         document.getElementById("selectedUserDetailsDisplay").style.display = "block";
 
-        const selectedUserData = FIXED_DATA[userSelect];
+        const selectedUserData = FIXED_DATA[userSelect]; // Use FIXED_DATA here
         document.getElementById("displayConsumerId").textContent = selectedUserData.consumer_id || 'N/A';
         document.getElementById("displayMeterNumber").textContent = selectedUserData.meter_number || 'N/A';
 
