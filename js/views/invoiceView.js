@@ -149,7 +149,6 @@ export function renderInvoiceView(targetElement) {
 // PDF download function (now part of the module, exposed globally via window.invoiceFunctions)
 function downloadPDF() {
     console.log("Download PDF button clicked!");
-    // --- CRITICAL FIX: Target the main app-content element ---
     const element = document.getElementById('app-content'); 
     if (!element) {
         console.error("Error: '#app-content' element not found for PDF generation.");
@@ -161,11 +160,13 @@ function downloadPDF() {
         margin:       [0.1, 0.1, 0.1, 0.1], // Very small margins (top, right, bottom, left)
         filename:     'invoice.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        // Adjust scale to fit more content. Lower scale means smaller image, more fits.
-        // If 1.0 is too small, try 1.2 or 1.3. If content is still cut, go lower (e.g., 0.8).
-        html2canvas:  { scale: 1.0, logging: false }, 
+        // Adjust html2canvas scale to fit more content. Lower scale means smaller image, more fits.
+        // We'll try 0.8, which makes the image 80% of its original size, fitting more.
+        html2canvas:  { scale: 0.8, logging: false }, // Significantly reduced scale
         // Increase PDF height significantly to accommodate long content
-        jsPDF:        { unit: 'in', format: [8.5, 30], orientation: 'portrait' } // Increased height from 20 to 30 inches
+        // Changed to 'a4' format with portrait orientation, but we'll try to force content onto it.
+        // If content is very long, a custom tall format might still be needed.
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' } 
     };
 
     try {
