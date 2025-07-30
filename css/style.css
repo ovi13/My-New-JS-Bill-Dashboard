@@ -5,13 +5,7 @@ body {
     margin: 0;
     padding: 0;
     /* --- REMOVED All Fancy Background Changes (stars and gradient) --- */
-    /*
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpath d='M5 0L6.18 3.63L10 3.82L7.09 6.18L8.18 10L5 7.73L1.82 10L2.91 6.18L0 3.82L3.82 3.63L5 0Z' fill='%23ccc' opacity='0.2'/%3E%3C/svg%3E"), linear-gradient(to right, #ece9e6, #ffffff);
-    background-repeat: repeat, no-repeat;
-    background-position: 0 0, center center;
-    background-size: auto, cover;
-    */
-    /* --- END REMOVED Fancy Background Changes --- */
+    /* The lines for background-image, background-repeat, background-position, and background-size are now completely gone. */
 }
 
 .navbar {
