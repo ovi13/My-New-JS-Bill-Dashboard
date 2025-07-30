@@ -163,8 +163,8 @@ function downloadPDF() {
         image:        { type: 'jpeg', quality: 0.98 },
         // --- CRITICAL FIX: Further reduce html2canvas scale ---
         // This is the most impactful setting for fitting content.
-        // 0.6 means 60% of original size. This will make text smaller but fit more.
-        html2canvas:  { scale: 0.6, logging: false }, 
+        // 0.5 means 50% of original size. This will make text very small but fit more.
+        html2canvas:  { scale: 0.5, logging: false }, 
         // --- CRITICAL FIX: Explicitly set to A4 portrait ---
         // jsPDF will try to fit the scaled image onto this page size.
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' } 
