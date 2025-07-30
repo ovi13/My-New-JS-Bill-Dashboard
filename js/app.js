@@ -24,7 +24,7 @@ function initializeRouter(contentElementId) {
     console.log('Router: Hashchange listener added.');
 
     // Handle initial route on page load
-    handleRouteChange();
+    handleRouteChange(); // This call will now find the routes
     console.log('Router: Initial route handling triggered.');
 }
 
@@ -68,13 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('app.js: Type of renderBillFormView:', typeof renderBillFormView, renderBillFormView);
     console.log('app.js: Type of renderInvoiceView:', typeof renderInvoiceView, renderInvoiceView);
 
-    initializeRouter('app-content');
-
-    // Register routes with the imported functions
+    // --- CRITICAL FIX: Register routes BEFORE initializing the router ---
     addRoute('home', renderHomeView);
     addRoute('calculator', renderCalculatorView);
     addRoute('bill_form', renderBillFormView);
     addRoute('invoice', renderInvoiceView);
+    // --- END CRITICAL FIX ---
+
+    initializeRouter('app-content'); // Now initializeRouter will find the routes
 
     console.log('app.js: Router initialization and route registration complete.');
 });
