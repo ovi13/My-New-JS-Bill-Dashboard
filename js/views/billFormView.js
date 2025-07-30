@@ -4,7 +4,7 @@
 window.currentInvoiceData = null;
 
 // Function to render the bill form page content
-function renderBillFormView(targetElement) {
+window.renderBillFormView = function(targetElement) { // <<< ADDED window.
     const billFormHtml = `
         <h1>Utility Bill Generator</h1>
         <form id="invoiceForm">
@@ -131,17 +131,15 @@ function renderBillFormView(targetElement) {
     }
 
     // Initial call to set up fields based on default selection
-    billFormFunctions.showBillFields(); // Call it directly as it's defined globally now
-    // A small timeout ensures the DOM is fully ready after innerHTML
+    // Use a small timeout to ensure DOM elements are fully available after innerHTML
     setTimeout(billFormFunctions.showBillFields, 0); 
 
-    // Expose functions to the global scope if elements have inline onclick/onchange attributes
-    // (though it's better to attach listeners directly as above where possible)
+    // Expose functions to the global scope for onclick/onchange attributes
     window.billFormFunctions = {
         showBillFields,
         addTransactionField,
-        resetTransactionFields, // Still useful if called by other JS logic
-        resetRequiredAttributes, // Still useful if called by other JS logic
+        resetTransactionFields,
+        resetRequiredAttributes,
         handleFormSubmission
     };
 }
@@ -185,7 +183,7 @@ function showBillFields() {
         console.log("Predefined user selected:", userSelect);
         document.getElementById("selectedUserDetailsDisplay").style.display = "block";
 
-        const selectedUserData = FIXED_DATA[userSelect];
+        const selectedUserData = FIXED_DATA[userSelect]; // Use FIXED_DATA here
         document.getElementById("displayConsumerId").textContent = selectedUserData.consumer_id || 'N/A';
         document.getElementById("displayMeterNumber").textContent = selectedUserData.meter_number || 'N/A';
 
