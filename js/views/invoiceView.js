@@ -1,7 +1,10 @@
 // js/views/invoiceView.js
 
+// Store current invoice data in a global variable for invoiceView to access
+window.currentInvoiceData = null;
+
 // Function to render the invoice page content
-function renderInvoiceView(targetElement) {
+window.renderInvoiceView = function(targetElement) {
     const invoiceData = window.currentInvoiceData || {}; // Get data from global variable
 
     if (!invoiceData.name) {
@@ -135,11 +138,11 @@ function downloadPDF() {
     }
 
     var opt = {
-        margin: [0.1, 0.1, 0.1, 0.1], // Very small margins (top, right, bottom, left)
-        filename: 'invoice.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 1.5, logging: false }, // Reduced scale from 2 to 1.5, disable logging
-        jsPDF: { unit: 'in', format: [8.5, 20], orientation: 'portrait' } // Very generous height for single page
+        margin:       [0.1, 0.1, 0.1, 0.1], // Very small margins (top, right, bottom, left)
+        filename:     'invoice.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 1.5, logging: false }, // Reduced scale from 2 to 1.5, disable logging
+        jsPDF:        { unit: 'in', format: [8.5, 20], orientation: 'portrait' } 
     };
 
     try {
