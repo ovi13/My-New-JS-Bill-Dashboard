@@ -1,10 +1,10 @@
 // js/views/invoiceView.js
 
 // Store current invoice data in a global variable for invoiceView to access
-window.currentInvoiceData = null; // Still needed as it's set by billFormView
+window.currentInvoiceData = null;
 
 // Function to render the invoice page content
-export function renderInvoiceView(targetElement) { // <<< REMOVED 'window.' and ADDED 'export'
+export function renderInvoiceView(targetElement) {
     const invoiceData = window.currentInvoiceData || {}; // Get data from global variable
 
     // Safely parse all numeric values just before using them in the HTML
@@ -141,7 +141,7 @@ export function renderInvoiceView(targetElement) { // <<< REMOVED 'window.' and 
 
     // Expose functions to the global scope for onclick attributes
     window.invoiceFunctions = {
-        downloadPDF
+        downloadPDF: downloadPDF // Assign the actual function
     };
     console.log('invoiceView.js: Invoice page rendered.'); // Debugging
 }
@@ -149,10 +149,11 @@ export function renderInvoiceView(targetElement) { // <<< REMOVED 'window.' and 
 // PDF download function (now part of the module, exposed globally via window.invoiceFunctions)
 function downloadPDF() {
     console.log("Download PDF button clicked!");
-    const element = document.querySelector('#app-content .container'); // Target the dynamically loaded container
+    // --- CRITICAL FIX: Target the main app-content element ---
+    const element = document.getElementById('app-content'); 
     if (!element) {
-        console.error("Error: '.container' element not found for PDF generation.");
-        alert("Could not generate PDF: content missing.");
+        console.error("Error: '#app-content' element not found for PDF generation.");
+        alert("Could not generate PDF: content missing."); // Use alert for critical user feedback
         return;
     }
 
@@ -160,8 +161,11 @@ function downloadPDF() {
         margin:       [0.1, 0.1, 0.1, 0.1], // Very small margins (top, right, bottom, left)
         filename:     'invoice.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 1.5, logging: false }, // Reduced scale from 2 to 1.5, disable logging
-        jsPDF:        { unit: 'in', format: [8.5, 20], orientation: 'portrait' } 
+        // Adjust scale to fit more content. Lower scale means smaller image, more fits.
+        // If 1.0 is too small, try 1.2 or 1.3. If content is still cut, go lower (e.g., 0.8).
+        html2canvas:  { scale: 1.0, logging: false }, 
+        // Increase PDF height significantly to accommodate long content
+        jsPDF:        { unit: 'in', format: [8.5, 30], orientation: 'portrait' } // Increased height from 20 to 30 inches
     };
 
     try {
