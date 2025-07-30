@@ -1,7 +1,6 @@
 // js/views/calculatorView.js
 
-// Calculator view rendering function
-window.renderCalculatorView = function(targetElement) { // <<< ADDED window.
+export function renderCalculatorView(targetElement) { // <<< REMOVED 'window.' and ADDED 'export'
     const calculatorHtml = `
         <h1>Bill Calculator</h1>
 
@@ -99,20 +98,19 @@ window.renderCalculatorView = function(targetElement) { // <<< ADDED window.
     targetElement.innerHTML = calculatorHtml;
 
     // Attach event listeners and run calculations after HTML is rendered
-    // Expose functions to the global scope for oninput attributes
-    window.calculatorFunctions = {
+    window.calculatorFunctions = { // Expose functions globally for oninput attributes
         calculateRow,
         calculateNetTotals,
         handleSharedMotorBill,
         calculateAll
     };
     // Initial calculation call when the view is loaded by the router
-    // Use a timeout to ensure DOM elements are fully available after innerHTML
     setTimeout(calculatorFunctions.calculateAll, 0); 
-    console.log('calculatorView.js: Calculator page rendered and calculations initialized.'); // Debugging
+    console.log('calculatorView.js: Calculator page rendered and calculations initialized.');
 }
 
 // --- JavaScript functions for Calculator Logic (moved from Flask template script) ---
+// These are now regular functions within the module scope, implicitly part of `calculatorView.js`
 function calculateRow(rowId) {
     const row = document.getElementById(rowId);
     if (!row) return;
