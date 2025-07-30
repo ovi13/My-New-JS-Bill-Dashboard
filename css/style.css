@@ -5,7 +5,6 @@ body {
     margin: 0;
     padding: 0;
     /* --- REMOVED All Fancy Background Changes (stars and gradient) --- */
-    /* The lines for background-image, background-repeat, background-position, and background-size are now completely gone. */
 }
 
 .navbar {
@@ -420,6 +419,36 @@ button:active {
 
 
 /*
+--- Invoice Section Box Styles --- */
+.invoice-section-box {
+    border: 1px solid #ddd; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Internal spacing */
+    margin: 20px auto; /* External spacing and center the box */
+    max-width: 600px; /* Limit width for better readability */
+    background-color: #fefefe; /* Slightly off-white background */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Soft shadow */
+    text-align: center; /* Center text content within the box */
+}
+
+.invoice-section-box h2,
+.invoice-section-box h3 {
+    margin-top: 0; /* Reset top margin to align with box padding */
+    margin-bottom: 10px; /* Consistent spacing below headings */
+}
+
+.invoice-section-box .invoice-table {
+    margin-left: auto; /* Center tables within the box */
+    margin-right: auto;
+    width: 95%; /* Make tables slightly narrower than the box */
+}
+
+.invoice-section-box p {
+    margin-bottom: 5px; /* Reduce spacing for paragraphs in summary box */
+}
+
+
+/*
 --- Print Specific Styles --- */
 @media print {
     /* Set page size and orientation for print dialog */
@@ -543,5 +572,14 @@ button:active {
     .table-row .input-cell::before,
     .table-row .output-cell::before {
         content: none;
+    }
+
+    /* New print styles for invoice-section-box */
+    .invoice-section-box {
+        border: 1px solid #ccc !important; /* Ensure border is visible in print */
+        padding: 2mm !important; /* Smaller padding for print */
+        margin: 5mm auto !important; /* Smaller margins for print */
+        box-shadow: none !important; /* No shadow in print */
+        background-color: transparent !important; /* No background color in print */
     }
 }
