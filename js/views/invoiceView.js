@@ -157,16 +157,18 @@ function downloadPDF() {
     }
 
     var opt = {
-        margin:       [0.1, 0.1, 0.1, 0.1], // Very small margins (top, right, bottom, left)
+        // --- CRITICAL FIX: Set all margins to 0 ---
+        margin:       0, // Set all margins to 0 for maximum content area
         filename:     'invoice.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         // Adjust html2canvas scale to fit more content. Lower scale means smaller image, more fits.
-        // We'll try 0.8, which makes the image 80% of its original size, fitting more.
-        html2canvas:  { scale: 0.8, logging: false }, // Significantly reduced scale
-        // Increase PDF height significantly to accommodate long content
-        // Changed to 'a4' format with portrait orientation, but we'll try to force content onto it.
-        // If content is very long, a custom tall format might still be needed.
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' } 
+        // We'll try 0.7, which makes the image 70% of its original size.
+        html2canvas:  { scale: 0.7, logging: false }, // Further reduced scale
+        // --- CRITICAL FIX: Use a very tall custom format for jsPDF ---
+        // This tells jsPDF to create a single, extremely long page,
+        // so the entire html2canvas image can fit without splitting.
+        // The PDF viewer will then scale it to fit the screen.
+        jsPDF:        { unit: 'in', format: [8.5, 40], orientation: 'portrait' } // Increased height to 40 inches
     };
 
     try {
