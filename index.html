@@ -18,14 +18,16 @@
         Loading application...
     </div>
 
-    <!-- Load JavaScript files as modules with defer for correct order and scoping -->
-    <script src="js/data.js" defer></script>
-    <script src="js/views/homeView.js" defer></script>
-    <script src="js/views/calculatorView.js" defer></script>
-    <script src="js/views/billFormView.js" defer></script>
-    <script src="js/views/invoiceView.js" defer></script>
-    <script src="js/app.js" defer></script>
-    <!-- html2pdf.js for invoice page (no defer as it defines global object) -->
+    <!-- Load JavaScript files as ES Modules with defer -->
+    <!-- Order matters for dependencies: data.js first, then views, then app.js -->
+    <script src="js/data.js" type="module" defer></script>
+    <script src="js/views/homeView.js" type="module" defer></script>
+    <script src="js/views/calculatorView.js" type="module" defer></script>
+    <script src="js/views/billFormView.js" type="module" defer></script>
+    <script src="js/views/invoiceView.js" type="module" defer></script>
+    <script src="js/app.js" type="module" defer></script>
+    
+    <!-- html2pdf.js for invoice page (not a module, provides global object) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
