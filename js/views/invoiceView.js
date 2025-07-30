@@ -106,7 +106,18 @@ export function renderInvoiceView(targetElement) {
             </table>
         </div>
 
-        ${invoiceData.combined_transactions && invoiceData.combined_transactions.length > 0 ? `
+       
+        <div class="invoice-section-box invoice-summary-box">
+            <h3>Total Bill: ৳${total_bill.toFixed(2)}</h3>
+            <p><strong>Amount Paid:</strong> ৳${total_paid.toFixed(2)}</p>
+
+            ${balance < 0 ? `
+            <p><strong>Balance Due:</strong> ৳${Math.abs(balance).toFixed(2)}</p>` : balance > 0 ? `
+            <p><strong>Balance Returned:</strong> ৳${balance.toFixed(2)}</p>` : `
+            <p><strong>Balance:</strong> ৳${balance.toFixed(2)}</p>`}
+        </div>
+
+         ${invoiceData.combined_transactions && invoiceData.combined_transactions.length > 0 ? `
         <div class="invoice-section-box">
             <h3>Transaction Details:</h3>
             <table class="invoice-table">
@@ -125,16 +136,6 @@ export function renderInvoiceView(targetElement) {
                 </tbody>
             </table>
         </div>` : ''}
-
-        <div class="invoice-section-box invoice-summary-box">
-            <h3>Total Bill: ৳${total_bill.toFixed(2)}</h3>
-            <p><strong>Amount Paid:</strong> ৳${total_paid.toFixed(2)}</p>
-
-            ${balance < 0 ? `
-            <p><strong>Balance Due:</strong> ৳${Math.abs(balance).toFixed(2)}</p>` : balance > 0 ? `
-            <p><strong>Balance Returned:</strong> ৳${balance.toFixed(2)}</p>` : `
-            <p><strong>Balance:</strong> ৳${balance.toFixed(2)}</p>`}
-        </div>
 
         <p>This is a computer programming generated invoice, does not require any signature.</p>
 
