@@ -81,19 +81,19 @@ export function renderInvoiceView(targetElement) {
 
                     ${invoiceData.name === "Gas Bill" ? `
                     <tr>
-                        <td>Mridul's Share (Gas Bill):</td>
+                        <td>Mridul's Share (Gas Bill):2160</td>
                         <td class="numeric">৳${gas_bill_mridul.toFixed(2)}</td>
                     </tr>
                     <tr>
-                        <td>Pappu's Share (Gas Bill):</td>
+                        <td>Pappu's Share (Gas Bill):2160</td>
                         <td class="numeric">৳${gas_bill_pappu.toFixed(2)}</td>
                     </tr>
                     <tr>
-                        <td>Rita's Share (Gas Bill):</td>
+                        <td>Rita's Share (Gas Bill):1080</td>
                         <td class="numeric">৳${gas_bill_rita.toFixed(2)}</td>
                     </tr>
                     <tr>
-                        <td>Pijush's Share (Gas Bill):</td>
+                        <td>Pijush's Share (Gas Bill):1080</td>
                         <td class="numeric">৳${gas_bill_pijush.toFixed(2)}</td>
                     </tr>` : ''}
 
