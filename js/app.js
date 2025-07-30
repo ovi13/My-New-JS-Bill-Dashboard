@@ -1,14 +1,20 @@
 // js/app.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize the router, telling it where to render content
+    console.log('app.js: DOMContentLoaded - Initializing router and adding routes.');
+
     initializeRouter('app-content');
 
-    // Define routes
+    // --- CRUCIAL FIX: Directly pass the view functions as arguments ---
+    // Ensure these functions are defined and accessible in the global scope
+    // OR load them before app.js if they are in separate files.
+    // By loading js/views/*.js files in index.html BEFORE app.js, they become global.
+    // So, we can just reference them directly here.
+
     addRoute('home', renderHomeView);
     addRoute('calculator', renderCalculatorView);
     addRoute('bill_form', renderBillFormView);
-    addRoute('invoice', renderInvoiceView);
+    addRoute('invoice', renderInvoiceView); // Assuming invoiceView.js is also loaded
 
-    // Initial route load (will be handled by initializeRouter)
+    // Initial route is handled by initializeRouter after routes are added
 });
