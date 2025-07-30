@@ -40,7 +40,7 @@ body {
     padding: 30px;
     width: 80%;
     max-width: 800px;
-    margin: 20px auto; /* Added some top/bottom margin */
+    margin: 0 auto; /* Added some top/bottom margin */
 }
 
 h1 {
@@ -131,6 +131,17 @@ form select {
     border-radius: 4px;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
+
+/* hide native number‑input spinners */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 
 .transaction-group {
     background-color: #eef;
@@ -451,11 +462,14 @@ button:active {
 /*
 --- Print Specific Styles --- */
 @media print {
+
     /* Set page size and orientation for print dialog */
     @page {
         size: A4 landscape; /* Set to A4 and force landscape orientation */
         margin: 0; /* Extremely minimal margins for the print dialog itself */
     }
+
+   
 
     body {
         margin: 0;
@@ -582,4 +596,13 @@ button:active {
         box-shadow: none !important; /* No shadow in print */
         background-color: transparent !important; /* No background color in print */
     }
+
+     .navbar { display: none !important; }
+     /* Collapse margins/padding while html2pdf is running */
+    .pdf-export .container {
+        margin: 0 !important;   /* kills the 20 px top margin at L43‑L44 */ 
+        padding: 0 !important;  /* kills the 30 px top padding at L40‑L41 */ 
+    }
+    .pdf-export h1 { margin-top: 0 !important; }   /* belt‑and‑braces */
+
 }
