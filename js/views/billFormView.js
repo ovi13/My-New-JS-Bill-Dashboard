@@ -7,9 +7,9 @@ window.currentInvoiceData = null;
 function renderBillFormView(targetElement) {
     const billFormHtml = `
         <h1>Utility Bill Generator</h1>
-        <form id="invoiceForm" action="#invoice" method="post">
+        <form id="invoiceForm">
             <label for="user">Select Bill Type or User:</label>
-            <select id="user" name="user" onchange="billFormFunctions.showBillFields()" required>
+            <select id="user" name="user" required>
                 <option value="">--Select Bill Type or User--</option>
                 <option value="Motor Bill">Motor Bill</option>
                 <option value="Gas Bill">Gas Bill</option>
@@ -119,19 +119,29 @@ function renderBillFormView(targetElement) {
     `;
     targetElement.innerHTML = billFormHtml;
 
-    // Attach event listener for form submission and run initial field setup
+    // Attach event listeners after HTML is rendered
+    const userSelectElement = document.getElementById('user');
+    if (userSelectElement) {
+        userSelectElement.addEventListener('change', billFormFunctions.showBillFields);
+    }
+    
     const invoiceForm = document.getElementById('invoiceForm');
     if (invoiceForm) {
         invoiceForm.addEventListener('submit', billFormFunctions.handleFormSubmission);
-        billFormFunctions.showBillFields(); // Initialize display after HTML is rendered
     }
 
-    // Expose functions to the global scope for onchange/onclick attributes
+    // Initial call to set up fields based on default selection
+    billFormFunctions.showBillFields(); // Call it directly as it's defined globally now
+    // A small timeout ensures the DOM is fully ready after innerHTML
+    setTimeout(billFormFunctions.showBillFields, 0); 
+
+    // Expose functions to the global scope if elements have inline onclick/onchange attributes
+    // (though it's better to attach listeners directly as above where possible)
     window.billFormFunctions = {
         showBillFields,
         addTransactionField,
-        resetTransactionFields,
-        resetRequiredAttributes,
+        resetTransactionFields, // Still useful if called by other JS logic
+        resetRequiredAttributes, // Still useful if called by other JS logic
         handleFormSubmission
     };
 }
@@ -175,7 +185,7 @@ function showBillFields() {
         console.log("Predefined user selected:", userSelect);
         document.getElementById("selectedUserDetailsDisplay").style.display = "block";
 
-        const selectedUserData = FIXED_DATA[userSelect]; // Use FIXED_DATA here
+        const selectedUserData = FIXED_DATA[userSelect];
         document.getElementById("displayConsumerId").textContent = selectedUserData.consumer_id || 'N/A';
         document.getElementById("displayMeterNumber").textContent = selectedUserData.meter_number || 'N/A';
 
@@ -256,21 +266,18 @@ function resetRequiredAttributes(activeSectionPrefix) {
     console.log("resetRequiredAttributes finished.");
 }
 
-// Function to handle form submission
 function handleFormSubmission(event) {
-    event.preventDefault(); // Prevent default form submission to Flask
+    event.preventDefault(); // Prevent default form submission
 
     const form = event.target;
     const formData = new FormData(form);
 
     const invoiceData = {};
 
-    // Get selected user and billing month
     invoiceData.user = formData.get('user') || '';
     invoiceData.billing_month = formData.get('billing_month') || '';
 
-    // Initialize all possible bill components to 0.0 for safety
-    invoiceData.name = invoiceData.user; // Default name from selection
+    invoiceData.name = invoiceData.user;
     invoiceData.consumer_id = '';
     invoiceData.meter_number = '';
     invoiceData.electricity_bill = 0.0;
@@ -281,7 +288,6 @@ function handleFormSubmission(event) {
     invoiceData.combined_transactions = [];
 
 
-    // Determine active section and extract data
     if (invoiceData.user === "Enter Custom Data") {
         invoiceData.name = formData.get('name_custom') || 'Custom User';
         invoiceData.consumer_id = formData.get('consumer_id_custom') || '';
@@ -348,7 +354,6 @@ function handleFormSubmission(event) {
         }
     }
 
-    // Calculate totals (replicate app.py logic)
     const { total_bill, balance } = calculateInvoiceTotals(
         invoiceData.gas_bill,
         invoiceData.electricity_bill,
@@ -359,14 +364,11 @@ function handleFormSubmission(event) {
     invoiceData.total_bill = total_bill;
     invoiceData.balance = balance;
 
-    // Get current date and time (replicate app.py logic)
     const now = new Date();
-    invoiceData.billing_date = now.toISOString().slice(0, 10); // YYYY-MM-DD
+    invoiceData.billing_date = now.toISOString().slice(0, 10);
     invoiceData.billing_time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
-    // Store the prepared data globally for invoiceView to pick up
-    window.currentInvoiceData = invoiceData;
+    window.currentInvoiceData = invoiceData; // Store the prepared data globally
 
-    // Navigate to the invoice page
-    window.location.hash = '#invoice';
+    window.location.hash = '#invoice'; // Navigate to the invoice page
 }
